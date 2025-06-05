@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Portal</title>
+  <style>
+    :root {
+      --primary: #456BF7;
+      --light: #f0f3ff;
+      --gray-dark: #3F4254;
+      --font-family-sans-serif: 'Poppins', Helvetica, sans-serif;
+    }
+    body {
+      margin: 0;
+      font-family: var(--font-family-sans-serif);
+      background-color: var(--light);
+      color: var(--gray-dark);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    main {
+      flex-grow: 1;
+      padding: 2rem;
+    }
+    button.logout {
+      background-color: #fa375e;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome, <span id="clientName"></span></h1>
+    <button class="logout" onclick="handleLogout()">Exit</button>
+  </header>
+  <main>
+    <p>You are now connected with our Client Success team. You can start a chat with us from the Resource Center at the lower right of your screen.</p>
+  </main>
+
+  <script>window.dxe = { server: "https://us-central.dx.dialpad.com" };</script>
+  <script async type="module" src="https://us-central.dx.dialpad.com/dxclient/dist/dialpad-chatbot.es.js"></script>
+
+  <script>
+    const rawUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+    function fullyDecode(value) {
+      let decoded = value ?? "";
+      let prev;
+      try {
+        do {
+          prev = decoded;
+          decoded = decodeURIComponent(decoded);
+        } while (decoded !== prev);
+      } catch (e) {}
+      return decoded;
+    }
+
+    function cleanForDialpad(value) {
+      return (value ?? "")
+        .replace(/%/g, "")
+        .replace(/@/g, " [at] ")
+        .replace(/&/g, " and ")
+        .replace(/\s+/g, " ");
+    }
+
+    const user = {
+      name: fullyDecode(rawUser.name),
+      email: fullyDecode(rawUser.email),
+      phone: fullyDecode(rawUser.phone)
+    };
+
+    document.getElementById("clientName").textContent = user.name || "Client";
+
+    const wfVars = [
+      `custname=${cleanForDialpad(user.name)}`,
+      `custemail=${cleanForDialpad(user.email)}`,
+      `custphone=${cleanForDialpad(user.phone)}`
+    ].join(",");
+
+    const fab = document.createElement("img");
+    fab.id = "dx_chatbot_fab_id";
+    fab.src = "https://us-central.dx.dialpad.com/kpd-static/providers/83087440/webchat/bda2a68bb340432b98fcf502a734dec2/images/fab-icon.png";
+    fab.style = "clip-path:circle(50%); object-fit: contain; height: auto; width: 100%;";
+    fab.setAttribute("data-dxchannelid", "bda2a68bb340432b98fcf502a734dec2");
+    fab.setAttribute("data-dxprovemail", "5495351674880000@hrforhealth.com");
+    fab.setAttribute("data-dxwfvars", wfVars);
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "dx_chatbot_fab_wrapper_id";
+    wrapper.style = `
+      background-color:#6c1396;
+      border-radius:50%;
+      box-sizing: border-box;
+      display: flex;
+      height:56px;
+      overflow:hidden;
+      padding:12px;
+      width:56px;
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 123;
+    `;
+    wrapper.appendChild(fab);
+    document.body.appendChild(wrapper);
+
+    function handleLogout() {
+      localStorage.removeItem("user");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
