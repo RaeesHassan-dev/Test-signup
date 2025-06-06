@@ -91,11 +91,15 @@
 
     document.getElementById("clientName").textContent = user.name || "Client";
 
-    const wfVars = [
-      `custname=${cleanForDialpad(user.name)}`,
-      `custemail=${cleanForDialpad(user.email)}`,
-      `custphone=${cleanForDialpad(user.phone)}`
-    ].join(",");
+const wfVars = [
+  `custname=${user.name}`,
+  `custemail=${user.email}`,
+  `custphone=${user.phone}`,
+  `custOID=${user.oid}`,
+  `custPermissions=${user.permissions}`,
+  `custProduct=${user.product}`
+].join(",");
+
 
     const fab = document.createElement("img");
     fab.id = "dx_chatbot_fab_id";
