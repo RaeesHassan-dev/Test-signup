@@ -1,29 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Login</title>
+  <style>
+    :root {
+      --primary: #456BF7;
+      --light: #f0f3ff;
+      --gray-dark: #3F4254;
+      --font-family-sans-serif: 'Poppins', Helvetica, sans-serif;
+    }
+    body {
+      margin: 0;
+      font-family: var(--font-family-sans-serif);
+      background-color: var(--light);
+      color: var(--gray-dark);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    main {
+      flex-grow: 1;
+      padding: 2rem;
+    }
+  </style>
 </head>
 <body>
-  <h2>Login</h2>
-  <form onsubmit="login(event)">
-    <input type="email" id="email" placeholder="Email" required><br>
-    <input type="password" id="password" placeholder="Password" required><br>
-    <button type="submit">Login</button>
-  </form>
-<p>Don't have an account? <a href="register.html">Register here</a></p>
-
+  <header>
+    <h1>Welcome, <span id="clientName">Client</span></h1>
+  </header>
+  <main>
+    <form onsubmit="login(event)">
+      <input type="email" id="email" placeholder="Email" required><br>
+      <input type="password" id="password" placeholder="Password" required><br>
+      <button type="submit">Login</button>
+    </form>
+    <p>Don’t have an account? <a href="register.html">Register here</a></p>
+  </main>
   <script>
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    document.getElementById("clientName").textContent = user.name || "Client";
+
     function login(e) {
       e.preventDefault();
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
-
       const user = users.find(u => u.email === email && u.password === password);
       if (!user) return alert("Invalid credentials");
-
       localStorage.setItem("user", JSON.stringify(user));
-      window.location.href = "webchat.html"; // Or webchat.html or zindex_TM.html
+      window.location.href = "webchat.html";
     }
   </script>
 </body>
