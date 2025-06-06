@@ -49,6 +49,12 @@
   </style>
 </head>
 <body>
+  <script>
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user.email) {
+    window.location.href = "login.html";
+  }
+</script>
   <header>
     <h1>Welcome, <span id="clientName"></span></h1>
     <button class="logout" onclick="handleLogout()">Exit</button>
