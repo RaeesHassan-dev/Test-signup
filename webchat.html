@@ -83,11 +83,15 @@
         .replace(/\s+/g, " ");
     }
 
-    const user = {
-      name: fullyDecode(rawUser.name),
-      email: fullyDecode(rawUser.email),
-      phone: fullyDecode(rawUser.phone)
-    };
+const user = {
+  name: fullyDecode(rawUser.name),
+  email: fullyDecode(rawUser.email),
+  phone: fullyDecode(rawUser.phone),
+  oid: fullyDecode(rawUser.oid),
+  permissions: fullyDecode(rawUser.permissions),
+  product: fullyDecode(rawUser.product)
+};
+
 
     document.getElementById("clientName").textContent = user.name || "Client";
 
@@ -99,6 +103,7 @@ const wfVars = [
   `permissions=${user.permissions}`,
   `product=${user.product}`
 ].join(",");
+
 
 
     const fab = document.createElement("img");
