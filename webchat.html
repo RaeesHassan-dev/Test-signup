@@ -96,13 +96,14 @@ const user = {
     document.getElementById("clientName").textContent = user.name || "Client";
 
 const wfVars = [
-  `custname=${user.name}`,
-  `custemail=${user.email}`,
-  `custphone=${user.phone}`,
-  `oid=${user.oid}`,
-  `permissions=${user.permissions}`,
-  `product=${user.product}`
+  `custname=${cleanForDialpad(user.name)}`,
+  `custemail=${cleanForDialpad(user.email)}`,
+  `custphone=${cleanForDialpad(user.phone)}`,
+  `custOID=${cleanForDialpad(user.oid)}`,
+  `custPermissions=${cleanForDialpad(user.permissions)}`,
+  `custProduct=${cleanForDialpad(user.product)}`
 ].join(",");
+
 
 
 
