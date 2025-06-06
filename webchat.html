@@ -75,14 +75,6 @@
       return decoded;
     }
 
-    function cleanForDialpad(value) {
-      return (value ?? "")
-        .replace(/%/g, "")
-        .replace(/@/g, " [at] ")
-        .replace(/&/g, " and ")
-        .replace(/\s+/g, " ");
-    }
-
 const user = {
   name: fullyDecode(rawUser.name),
   email: fullyDecode(rawUser.email),
