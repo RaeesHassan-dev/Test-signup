@@ -5,13 +5,16 @@
 </head>
 <body>
   <h2>Register</h2>
-  <form onsubmit="register(event)">
-    <input type="text" id="name" placeholder="Full Name" required><br>
-    <input type="email" id="email" placeholder="Email" required><br>
-    <input type="text" id="phone" placeholder="Phone" required><br>
-    <input type="password" id="password" placeholder="Password" required><br>
-    <button type="submit">Sign Up</button>
-  </form>
+<form onsubmit="register(event)">
+  <input type="text" id="name" placeholder="Full Name" required><br>
+  <input type="email" id="email" placeholder="Email" required><br>
+  <input type="text" id="phone" placeholder="Phone" required><br>
+  <input type="text" id="oid" placeholder="Office ID" required><br>
+  <input type="text" id="permissions" placeholder="Permissions" required><br>
+  <input type="text" id="product" placeholder="Product Type" required><br>
+  <input type="password" id="password" placeholder="Password" required><br>
+  <button type="submit">Sign Up</button>
+</form>
 <p>Already have an account? <a href="login.html">Back to login</a></p>
 
   <script>
@@ -24,12 +27,15 @@
         return alert("Account already exists.");
       }
 
-      const user = {
-        name: document.getElementById("name").value.trim(),
-        email,
-        phone: document.getElementById("phone").value.trim(),
-        password: document.getElementById("password").value
-      };
+const user = {
+  name: document.getElementById("name").value.trim(),
+  email: document.getElementById("email").value.trim(),
+  phone: document.getElementById("phone").value.trim(),
+  oid: document.getElementById("oid").value.trim(),
+  permissions: document.getElementById("permissions").value.trim(),
+  product: document.getElementById("product").value.trim(),
+  password: document.getElementById("password").value
+};
 
       users.push(user);
       localStorage.setItem("users", JSON.stringify(users));
