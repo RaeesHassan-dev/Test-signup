@@ -1,42 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Register</title>
+  <style>
+    :root {
+      --primary: #456BF7;
+      --light: #f0f3ff;
+      --gray-dark: #3F4254;
+      --font-family-sans-serif: 'Poppins', Helvetica, sans-serif;
+    }
+    body {
+      margin: 0;
+      font-family: var(--font-family-sans-serif);
+      background-color: var(--light);
+      color: var(--gray-dark);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    main {
+      flex-grow: 1;
+      padding: 2rem;
+    }
+  </style>
 </head>
 <body>
-  <h2>Register</h2>
-<form onsubmit="register(event)">
-  <input type="text" id="name" placeholder="Full Name" required><br>
-  <input type="email" id="email" placeholder="Email" required><br>
-  <input type="text" id="phone" placeholder="Phone" required><br>
-  <input type="text" id="oid" placeholder="Office ID" required><br>
-  <input type="text" id="permissions" placeholder="Permissions" required><br>
-  <input type="text" id="product" placeholder="Product Type" required><br>
-  <input type="password" id="password" placeholder="Password" required><br>
-  <button type="submit">Sign Up</button>
-</form>
-<p>Already have an account? <a href="login.html">Back to login</a></p>
-
+  <header>
+    <h1>Welcome, <span id="clientName">Client</span></h1>
+  </header>
+  <main>
+    <form onsubmit="register(event)">
+      <input type="text" id="name" placeholder="Full Name" required><br>
+      <input type="email" id="email" placeholder="Email" required><br>
+      <input type="text" id="phone" placeholder="Phone" required><br>
+      <input type="text" id="oid" placeholder="Office ID" required><br>
+      <input type="text" id="permissions" placeholder="Permissions" required><br>
+      <input type="text" id="product" placeholder="Product Type" required><br>
+      <input type="password" id="password" placeholder="Password" required><br>
+      <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Back to login</a></p>
+  </main>
   <script>
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    document.getElementById("clientName").textContent = user.name || "Client";
+
     function register(e) {
       e.preventDefault();
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const email = document.getElementById("email").value.trim();
-
       if (users.find(u => u.email === email)) {
         return alert("Account already exists.");
       }
-
-const user = {
-  name: document.getElementById("name").value.trim(),
-  email: document.getElementById("email").value.trim(),
-  phone: document.getElementById("phone").value.trim(),
-  oid: document.getElementById("oid").value.trim(),
-  permissions: document.getElementById("permissions").value.trim(),
-  product: document.getElementById("product").value.trim(),
-  password: document.getElementById("password").value
-};
-
+      const user = {
+        name: document.getElementById("name").value.trim(),
+        email,
+        phone: document.getElementById("phone").value.trim(),
+        oid: document.getElementById("oid").value.trim(),
+        permissions: document.getElementById("permissions").value.trim(),
+        product: document.getElementById("product").value.trim(),
+        password: document.getElementById("password").value
+      };
       users.push(user);
       localStorage.setItem("users", JSON.stringify(users));
       alert("Registered successfully! You can now log in.");
