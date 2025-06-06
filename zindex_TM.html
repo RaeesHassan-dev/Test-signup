@@ -30,11 +30,15 @@
     }
 
     // Pass clean (non-URL-encoded) values
-    const wfVars = [
-      `custname=${user.name ?? ""}`,
-      `custemail=${user.email ?? ""}`,
-      `custphone=${user.phone ?? ""}`
-    ].join(',');
+const wfVars = [
+  `custname=${user.name ?? ""}`,
+  `custemail=${user.email ?? ""}`,
+  `custphone=${user.phone ?? ""}`,
+  `custOID=${user.oid ?? ""}`,
+  `custPermissions=${user.permissions ?? ""}`,
+  `custProduct=${user.product ?? ""}`
+].join(',');
+
 
     // Build FAB
     const fab = document.createElement("img");
