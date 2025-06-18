@@ -81,7 +81,9 @@ const user = {
   phone: fullyDecode(rawUser.phone),
   oid: fullyDecode(rawUser.oid),
   permissions: fullyDecode(rawUser.permissions),
-  product: fullyDecode(rawUser.product)
+  product: fullyDecode(rawUser.product),
+  authorized: fullyDecode(rawUser.authorized)
+
 };
 
 
@@ -93,7 +95,8 @@ const wfVars = [
   `custphone=${user.phone}`,
   `custOID=${user.oid}`,
   `custPermissions=${user.permissions}`,
-  `custProduct=${user.product}`
+  `custProduct=${user.product}`,
+  `custAuthorized=${user.authorized}`
 ].join(",");
 
 
